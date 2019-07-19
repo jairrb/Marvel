@@ -9,7 +9,7 @@ import androidx.room.TypeConverters;
 import com.manamob.marvel.data.database.dao.ComicsDao;
 import com.manamob.marvel.model.Result;
 
-@androidx.room.Database(entities = {Result.class}, version = 6, exportSchema = false)
+@androidx.room.Database(entities = {Result.class}, version = 1, exportSchema = false)
 @TypeConverters(Converters.class)
 
 public abstract class DataBase extends RoomDatabase {

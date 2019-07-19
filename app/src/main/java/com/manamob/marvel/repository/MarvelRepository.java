@@ -40,7 +40,7 @@ public class MarvelRepository {
                         , "comic"
                         , true
                         , "focDate"
-                        , "10"
+                        , "50"
                         , ts
                         , hash
                         , PUBLIC_KEY);

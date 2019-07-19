@@ -5,8 +5,6 @@ import androidx.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.manamob.marvel.model.Characters;
-import com.manamob.marvel.model.CollectedIssue;
-import com.manamob.marvel.model.Collection;
 import com.manamob.marvel.model.Creators;
 import com.manamob.marvel.model.Events;
 import com.manamob.marvel.model.Image;
@@ -16,8 +14,6 @@ import com.manamob.marvel.model.Stories;
 import com.manamob.marvel.model.TextObject;
 import com.manamob.marvel.model.Thumbnail;
 import com.manamob.marvel.model.Url;
-import com.manamob.marvel.model.Variant;
-
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.List;
@@ -65,33 +61,6 @@ public class Converters {
         return gson.toJson(list);
     }
 
-    // Type converter para List<CollectedIssue>
-    @TypeConverter
-    public List<CollectedIssue> fromCollectedIssue(String value) {
-        Type listType = (Type) new TypeToken<List<CollectedIssue>>() {
-        }.getType();
-        return new Gson().fromJson(value, listType);
-    }
-
-    @TypeConverter
-    public String fromCollectedIssue(List<CollectedIssue> list) {
-        Gson gson = new Gson();
-        return gson.toJson(list);
-    }
-
-    // Type converter para List<Collection>
-    @TypeConverter
-    public List<Collection> fromCollection(String value) {
-        Type listType = (Type) new TypeToken<List<Collection>>() {
-        }.getType();
-        return new Gson().fromJson(value, listType);
-    }
-
-    @TypeConverter
-    public String fromCollection(List<Collection> list) {
-        Gson gson = new Gson();
-        return gson.toJson(list);
-    }
 
     //Type converter para Creators
     @TypeConverter
@@ -243,19 +212,17 @@ public class Converters {
         return gson.toJson(list);
     }
 
-
-    // Type converter para List<Variant>
+    // Type converter para List<Object>
     @TypeConverter
-    public List<Variant> fromVariant(String value) {
-        Type listType = (Type) new TypeToken<List<Variant>>() {
+    public List<Object> fromObject(String value) {
+        Type listType = (Type) new TypeToken<List<Object>>() {
         }.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
-    public String fromVariant(List<Variant> list) {
+    public String fromObject(List<Object> list) {
         Gson gson = new Gson();
         return gson.toJson(list);
     }
-
 }

@@ -1,10 +1,13 @@
 
 package com.manamob.marvel.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 
 @SuppressWarnings("unused")
-public class Item {
+public class Item implements Parcelable {
 
     @Expose
     private String name;
@@ -14,6 +17,25 @@ public class Item {
     private String role;
     @Expose
     private String type;
+
+    protected Item(Parcel in) {
+        name = in.readString();
+        resourceURI = in.readString();
+        role = in.readString();
+        type = in.readString();
+    }
+
+    public static final Creator<Item> CREATOR = new Creator<Item>() {
+        @Override
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
+        }
+
+        @Override
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -47,4 +69,16 @@ public class Item {
         this.type = type;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(resourceURI);
+        dest.writeString(role);
+        dest.writeString(type);
+    }
 }

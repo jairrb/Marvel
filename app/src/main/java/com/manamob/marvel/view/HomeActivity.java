@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         //Observable Error
         comicsViewModel.getErrorLiveData()
                 .observe(this, throwable -> {
-                    Snackbar.make(recyclerViewComics, throwable.getMessage(),Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(recyclerViewComics, throwable.getMessage(),Snackbar.LENGTH_LONG).show();
                 });
     }
 

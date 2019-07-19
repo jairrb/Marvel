@@ -12,7 +12,12 @@
         android:roundIcon="@drawable/ic_marvel"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.DetailActivity"></activity>
+        <activity
+            android:name=".view.ImagePopupActivity"
+            android:theme="@style/NoActionBar"></activity>
+        <activity
+            android:name=".view.DetailActivity"
+            android:theme="@style/NoActionBar" />
         <activity
             android:name=".view.HomeActivity"
             android:label="@string/title_activity_home"

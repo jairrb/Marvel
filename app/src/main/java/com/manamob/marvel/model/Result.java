@@ -4,79 +4,56 @@ package com.manamob.marvel.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import com.google.gson.annotations.Expose;
 
 import java.util.List;
 
 @Entity(tableName = "comics")
 public class Result implements Parcelable {
 
-    @Expose
+    public Result() {
+    }
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo (name = "idComic")
+    private long idComic;
+
     private Characters characters;
-    @Expose
     private List<Object> collectedIssues;
-    @Expose
     private List<Object> collections;
-    @Expose
     private Creators creators;
-    @Expose
     private List<Date> dates;
-    @Expose
     private String description;
-    @Expose
     private String diamondCode;
-    @Expose
     private Long digitalId;
-    @Expose
     private String ean;
-    @Expose
     private Events events;
-    @Expose
     private String format;
-    @PrimaryKey
-    @NonNull
-    @Expose
     private Long id;
-    @Expose
     private List<Image> images;
-    @Expose
     private String isbn;
-    @Expose
     private String issn;
-    @Expose
     private Long issueNumber;
-    @Expose
     private String modified;
-    @Expose
     private Long pageCount;
-    @Expose
     private List<Price> prices;
-    @Expose
     private String resourceURI;
-    @Expose
     private Series series;
-    @Expose
     private Stories stories;
-    @Expose
     private List<TextObject> textObjects;
-    @Expose
     private Thumbnail thumbnail;
-    @Expose
     private String title;
-    @Expose
     private String upc;
-    @Expose
     private List<Url> urls;
-    @Expose
     private String variantDescription;
-    @Expose
     private List<Object> variants;
 
     protected Result(Parcel in) {
+        characters = in.readParcelable(Characters.class.getClassLoader());
+        creators = in.readParcelable(Creators.class.getClassLoader());
+        dates = in.createTypedArrayList(Date.CREATOR);
         description = in.readString();
         diamondCode = in.readString();
         if (in.readByte() == 0) {
@@ -85,12 +62,14 @@ public class Result implements Parcelable {
             digitalId = in.readLong();
         }
         ean = in.readString();
+        events = in.readParcelable(Events.class.getClassLoader());
         format = in.readString();
         if (in.readByte() == 0) {
             id = null;
         } else {
             id = in.readLong();
         }
+        images = in.createTypedArrayList(Image.CREATOR);
         isbn = in.readString();
         issn = in.readString();
         if (in.readByte() == 0) {
@@ -104,9 +83,15 @@ public class Result implements Parcelable {
         } else {
             pageCount = in.readLong();
         }
+        prices = in.createTypedArrayList(Price.CREATOR);
         resourceURI = in.readString();
+        series = in.readParcelable(Series.class.getClassLoader());
+        stories = in.readParcelable(Stories.class.getClassLoader());
+        textObjects = in.createTypedArrayList(TextObject.CREATOR);
+        thumbnail = in.readParcelable(Thumbnail.class.getClassLoader());
         title = in.readString();
         upc = in.readString();
+        urls = in.createTypedArrayList(Url.CREATOR);
         variantDescription = in.readString();
     }
 
@@ -121,6 +106,16 @@ public class Result implements Parcelable {
             return new Result[size];
         }
     };
+
+
+    public long getIdComic() {
+        return idComic;
+    }
+
+    public void setIdComic(long idComic) {
+        this.idComic = idComic;
+    }
+
 
     public Characters getCharacters() {
         return characters;
@@ -361,6 +356,9 @@ public class Result implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(characters, flags);
+        dest.writeParcelable(creators, flags);
+        dest.writeTypedList(dates);
         dest.writeString(description);
         dest.writeString(diamondCode);
         if (digitalId == null) {
@@ -370,6 +368,7 @@ public class Result implements Parcelable {
             dest.writeLong(digitalId);
         }
         dest.writeString(ean);
+        dest.writeParcelable(events, flags);
         dest.writeString(format);
         if (id == null) {
             dest.writeByte((byte) 0);
@@ -377,6 +376,7 @@ public class Result implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeLong(id);
         }
+        dest.writeTypedList(images);
         dest.writeString(isbn);
         dest.writeString(issn);
         if (issueNumber == null) {
@@ -392,9 +392,15 @@ public class Result implements Parcelable {
             dest.writeByte((byte) 1);
             dest.writeLong(pageCount);
         }
+        dest.writeTypedList(prices);
         dest.writeString(resourceURI);
+        dest.writeParcelable(series, flags);
+        dest.writeParcelable(stories, flags);
+        dest.writeTypedList(textObjects);
+        dest.writeParcelable(thumbnail, flags);
         dest.writeString(title);
         dest.writeString(upc);
+        dest.writeTypedList(urls);
         dest.writeString(variantDescription);
     }
 }
