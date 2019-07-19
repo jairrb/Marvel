@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.manamob.marvel.data.database.DataBase;
 import com.manamob.marvel.data.database.dao.ComicsDao;
-import com.manamob.marvel.model.Comics;
+import com.manamob.marvel.model.Result;
 import com.manamob.marvel.model.ComicsResponse;
 import com.manamob.marvel.repository.MarvelRepository;
 
@@ -22,18 +22,18 @@ import io.reactivex.schedulers.Schedulers;
 import static com.manamob.marvel.util.AppUtil.isNetworkConnected;
 
 public class ComicsViewModel extends AndroidViewModel {
-    private MutableLiveData<List<Comics>> comicsLiveData = new MutableLiveData<>();
-    private MutableLiveData<Throwable> errorLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Result>> comicsLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> loadingLiveData = new MutableLiveData<>();
-
     private CompositeDisposable disposable = new CompositeDisposable();
     private MarvelRepository repository = new MarvelRepository();
+    private MutableLiveData<Throwable> errorLiveData = new MutableLiveData<>();
 
+    //Constructor Default
     public ComicsViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public LiveData<List<Comics>> getComicsLiveData() {
+    public LiveData<List<Result>> getComicsLiveData() {
         return comicsLiveData;
     }
 
@@ -46,13 +46,26 @@ public class ComicsViewModel extends AndroidViewModel {
     }
 
 
-    public void searchComics() {
+    public void getComics() {
         if (isNetworkConnected(getApplication())) {
             getApiCharacter();
         } else {
             getLocalCharacter();
         }
     }
+
+    private void getApiCharacter() {
+        disposable.add(repository.getComicsApi()
+                .subscribeOn(Schedulers.newThread())
+                .map(comicsResponse -> saveItems(comicsResponse))
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable1 -> loadingLiveData.setValue(true))
+                .doAfterTerminate(() -> loadingLiveData.setValue(false))
+                .subscribe(comicsResponse -> comicsLiveData.setValue(comicsResponse.getData().getResults())
+                        , throwable -> errorLiveData.setValue(throwable))
+        );
+    }
+
 
     private void getLocalCharacter() {
         disposable.add(
@@ -66,25 +79,15 @@ public class ComicsViewModel extends AndroidViewModel {
         );
     }
 
-    private void getApiCharacter() {
-        disposable.add(
-                repository.getComicsApi()
-                        .subscribeOn(Schedulers.newThread())
-                        .map(comicsResponse -> saveItems(comicsResponse))
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSubscribe(disposable1 -> loadingLiveData.setValue(true))
-                        .doAfterTerminate(() -> loadingLiveData.setValue(false))
-                        .subscribe(comicsResponse -> comicsLiveData.setValue(comicsResponse.getData().getComics())
-                                , throwable -> errorLiveData.setValue(throwable))
-        );
-    }
+
+
+
 
     private ComicsResponse saveItems(ComicsResponse comicsResponse) {
         ComicsDao comicsDao = DataBase.getDatabase(getApplication()
                 .getApplicationContext())
                 .comicsDao();
-
-        comicsDao.insertAll(comicsResponse.getData().getComics());
+        comicsDao.insertAll(comicsResponse.getData().getResults());
         return comicsResponse;
     }
 

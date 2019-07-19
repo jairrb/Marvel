@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.manamob.marvel.model.Comics;
+import com.manamob.marvel.model.Result;
 
 import java.util.List;
 
@@ -15,19 +15,19 @@ import io.reactivex.Flowable;
 @Dao
 public interface ComicsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Comics comics);
+    void insert(Result result);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Comics> comicsList);
+    void insertAll(List<Result> resultList);
 
     @Update
-    void update(Comics comics);
+    void update(Result result);
 
 
     @Query("SELECT * FROM comics limit 50")
-    List<Comics> getAll();
+    List<Result> getAll();
 
     @Query("SELECT * FROM  comics limit 50")
-    Flowable<List<Comics>> getAllRxJava();
+    Flowable<List<Result>> getAllRxJava();
 
 }

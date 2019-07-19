@@ -9,53 +9,53 @@ import java.util.List;
 public class Data {
 
     @Expose
-    private String count;
+    private Long count;
     @Expose
-    private String limit;
+    private Long limit;
     @Expose
-    private String offset;
+    private Long offset;
     @Expose
-    private List<Comics> comics;
+    private List<Result> results;
     @Expose
-    private String total;
+    private Long total;
 
-    public String getCount() {
+    public Long getCount() {
         return count;
     }
 
-    public void setCount(String count) {
+    public void setCount(Long count) {
         this.count = count;
     }
 
-    public String getLimit() {
+    public Long getLimit() {
         return limit;
     }
 
-    public void setLimit(String limit) {
+    public void setLimit(Long limit) {
         this.limit = limit;
     }
 
-    public String getOffset() {
+    public Long getOffset() {
         return offset;
     }
 
-    public void setOffset(String offset) {
+    public void setOffset(Long offset) {
         this.offset = offset;
     }
 
-    public List<Comics> getComics() {
-        return comics;
+    public List<Result> getResults() {
+        return results;
     }
 
-    public void setComics(List<Comics> comics) {
-        this.comics = comics;
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
 
-    public String getTotal() {
+    public Long getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(Long total) {
         this.total = total;
     }
 

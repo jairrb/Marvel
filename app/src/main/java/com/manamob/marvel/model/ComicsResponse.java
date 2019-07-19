@@ -3,7 +3,6 @@ package com.manamob.marvel.model;
 
 import com.google.gson.annotations.Expose;
 
-@SuppressWarnings("unused")
 public class ComicsResponse {
 
     @Expose
@@ -11,7 +10,7 @@ public class ComicsResponse {
     @Expose
     private String attributionText;
     @Expose
-    private String code;
+    private Long code;
     @Expose
     private String copyright;
     @Expose
@@ -20,7 +19,6 @@ public class ComicsResponse {
     private String etag;
     @Expose
     private String status;
-
 
     public String getAttributionHTML() {
         return attributionHTML;
@@ -38,11 +36,11 @@ public class ComicsResponse {
         this.attributionText = attributionText;
     }
 
-    public String getCode() {
+    public Long getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Long code) {
         this.code = code;
     }
 

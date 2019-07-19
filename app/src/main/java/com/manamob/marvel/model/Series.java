@@ -3,6 +3,7 @@ package com.manamob.marvel.model;
 
 import com.google.gson.annotations.Expose;
 
+
 @SuppressWarnings("unused")
 public class Series {
 

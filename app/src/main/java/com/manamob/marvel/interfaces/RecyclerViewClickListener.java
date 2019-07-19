@@ -1,7 +1,7 @@
 package com.manamob.marvel.interfaces;
 
-import com.manamob.marvel.model.Comics;
+import com.manamob.marvel.model.Result;
 
 public interface RecyclerViewClickListener {
-    void onItemClick(Comics comics);
+    void onItemClick(Result comics);
 }

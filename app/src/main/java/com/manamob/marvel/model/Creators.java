@@ -9,19 +9,19 @@ import java.util.List;
 public class Creators {
 
     @Expose
-    private String available;
+    private Long available;
     @Expose
     private String collectionURI;
     @Expose
     private List<Item> items;
     @Expose
-    private String returned;
+    private Long returned;
 
-    public String getAvailable() {
+    public Long getAvailable() {
         return available;
     }
 
-    public void setAvailable(String available) {
+    public void setAvailable(Long available) {
         this.available = available;
     }
 
@@ -41,11 +41,11 @@ public class Creators {
         this.items = items;
     }
 
-    public String getReturned() {
+    public Long getReturned() {
         return returned;
     }
 
-    public void setReturned(String returned) {
+    public void setReturned(Long returned) {
         this.returned = returned;
     }
 

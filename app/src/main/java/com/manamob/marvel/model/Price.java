@@ -7,15 +7,15 @@ import com.google.gson.annotations.Expose;
 public class Price {
 
     @Expose
-    private String price;
+    private Double price;
     @Expose
     private String type;
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
